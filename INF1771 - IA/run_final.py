@@ -1,11 +1,10 @@
-# run_final.py
 from map_loader import load_map, terrain_cost
 from pairwise import build_pairwise
 from tsp_held_karp import solve_tsp_path
 from runes import allocate_runes_greedy
 
 def main():
-    MAP_PATH = "mapa.txt"  # troque se quiser
+    MAP_PATH = "mapa.txt"  
     m = load_map(MAP_PATH)
 
     # 1) distâncias entre i, 16 eventos, Z
@@ -24,7 +23,6 @@ def main():
     events_time = alloc["total_event_time"]
     final_cost = travel_cost + events_time
 
-    # ----- Saída final (curta, direta) -----
     print("=== Resultado Final ===")
     print("Ordem:", " -> ".join(order))
     print("Custo de viagem (A*):", int(travel_cost))

@@ -1,4 +1,4 @@
-# astar.py — A* 4 direções, custo ao ENTRAR, heurística Manhattan×1
+#A* 4 direções, custo ao ENTRAR, heurística Manhattan×1
 import heapq
 
 def _manhattan(a, b):
@@ -41,9 +41,9 @@ def astar(mapdata, src, dst, terrain_cost_func):
                 continue
             ch = grid[vr][vc]
             cost = terrain_cost_func(ch)
-            if cost is None:               # bloqueado ('#' ou inválido)
+            if cost is None:               # bloqueado 
                 continue
-            ng = g[u] + float(cost)        # custo ao ENTRAR no vizinho
+            ng = g[u] + float(cost)   
             if (vr, vc) not in g or ng < g[(vr, vc)]:
                 g[(vr, vc)] = ng
                 parent[(vr, vc)] = u
@@ -52,10 +52,6 @@ def astar(mapdata, src, dst, terrain_cost_func):
 
     return float("inf"), []
 
-
-
-# --- depuração/visualização ---
-import heapq
 
 def astar_debug(mapdata, src, dst, terrain_cost_func, print_every=2000, print_full=False):
     """
@@ -123,7 +119,6 @@ def astar_debug(mapdata, src, dst, terrain_cost_func, print_every=2000, print_fu
     return float("inf"), [], opened, closed
 
 def _print_overlay(grid, opened, closed, path, start, goal):
-    # desenha um snapshot simples no console
     mark = {}
     for r,c in closed: mark[(r,c)] = 'x'     # visitados
     for r,c in opened:

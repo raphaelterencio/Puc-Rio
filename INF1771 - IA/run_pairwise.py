@@ -2,7 +2,7 @@
 from map_loader import load_map
 from pairwise import build_pairwise, get_pois
 
-MAP_PATH = "mapa.txt"  # use o arquivo do professor aqui
+MAP_PATH = "mapa.txt"  
 
 if __name__ == "__main__":
     m = load_map(MAP_PATH)
@@ -12,7 +12,7 @@ if __name__ == "__main__":
     dist = data["dist"]
 
     print("POIs (ordem):", labels)
-    print("Total de POIs:", len(labels))  # deve ser 18
+    print("Total de POIs:", len(labels))
     # exemplos rápidos
     print("Dist(i -> Z):", dist[0][-1])
 

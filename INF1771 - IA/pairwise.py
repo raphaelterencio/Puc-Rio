@@ -1,4 +1,3 @@
-# pairwise.py (rápido)
 import heapq
 from map_loader import terrain_cost
 
@@ -24,7 +23,7 @@ def astar_multitarget(mapdata, src, goals, terrain_cost_func):
 
     g = {src: 0.0}
     parent = {src: None}
-    # heurística: min Manhattan até qualquer alvo ainda faltante
+
     def h_min(v):
         if not remaining: return 0
         return min(_manhattan(v, gk) for gk in remaining)
@@ -40,7 +39,7 @@ def astar_multitarget(mapdata, src, goals, terrain_cost_func):
         if u in remaining:
             dist_found[u] = g[u]
             remaining.remove(u)
-            if not remaining: break  # já achamos todos
+            if not remaining: break 
 
         r, c = u
         for dr, dc in ((-1,0),(1,0),(0,-1),(0,1)):
@@ -61,9 +60,8 @@ def build_pairwise(mapdata):
     labels, coords = get_pois(mapdata)
     n = len(coords)
     dist = [[float('inf')]*n for _ in range(n)]
-    paths = {}  # opcional (não reconstruímos aqui para manter rápido)
+    paths = {}  
 
-    # para cada origem, busque apenas os destinos que importam e pare cedo
     for i in range(n):
         goals = [coords[j] for j in range(n) if j != i]
         found = astar_multitarget(mapdata, coords[i], goals, terrain_cost)

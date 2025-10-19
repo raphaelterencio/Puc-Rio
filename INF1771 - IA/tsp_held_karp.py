@@ -1,28 +1,21 @@
-# tsp_held_karp.py
 def solve_tsp_path(labels, dist):
     """
     labels: ['i', <16 eventos ordenados>, 'Z']
     dist: matriz NxN com custos inteiros (dist[i][j])
     Retorna (custo_total, ordem_labels)
     """
-    n_total = len(labels)           # deve ser 18
-    n_ev = n_total - 2              # 16 eventos
+    n_total = len(labels)          
+    n_ev = n_total - 2             
     if n_ev <= 0:
-        return 0, labels[:]         # nada a fazer
+        return 0, labels[:]        
 
-    # índices úteis
+   
     I = 0                           # 'i'
     Z = n_total - 1                 # 'Z'
-    # eventos são 1..16 no labels; mapeio para 0..15 no bitmask
-    # evento k (0..15) -> índice real no labels = 1 + k
-
-    # checagens básicas (se algo for inf, rota é impossível)
     for k in range(n_ev):
         if dist[I][1+k] == float('inf') or dist[1+k][Z] == float('inf'):
             return float('inf'), []
 
-    # DP[mask][j]: menor custo saindo de i, visitando 'mask' (eventos),
-    # terminando no evento j (j é 0..15)
     INF = float('inf')
     size = 1 << n_ev
     dp = [ [INF]*n_ev for _ in range(size) ]
@@ -32,7 +25,6 @@ def solve_tsp_path(labels, dist):
     for j in range(n_ev):
         dp[1<<j][j] = dist[I][1+j]   # i -> evento j
 
-    # transições
     for mask in range(size):
         # para cada último evento j presente em mask
         for j in range(n_ev):
@@ -70,12 +62,11 @@ def solve_tsp_path(labels, dist):
     if best_cost == INF:
         return INF, []
 
-    # reconstrução da ordem: i -> ...eventos... -> Z
     ordem_idx = []
     mask = full
     j = last_ev
     while j != -1:
-        ordem_idx.append(1 + j)   # índice no labels
+        ordem_idx.append(1 + j)   
         pj = parent[mask][j]
         mask ^= (1<<j)
         j = pj

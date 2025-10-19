@@ -2,7 +2,6 @@
 from config import TERRAIN_COST, EVENT_CHARS
 
 def _norm(ch):
-    # só para evitar travar se aparecerem 'I' e 'f' no arquivo do prof
     if ch == 'I': return 'i'
     if ch == 'f': return 'F'
     return ch
@@ -29,8 +28,8 @@ def load_map(path):
     return {"grid": grid, "start": start, "goal": goal, "events": events}
 
 def terrain_cost(ch):
-    # custo ao ENTRAR no tile; desconhecido trata como bloqueado
+
     ch = _norm(ch)
     if ch in EVENT_CHARS:
         return 1
-    return TERRAIN_COST.get(ch, None)  # None => bloqueado
+    return TERRAIN_COST.get(ch, None) 

@@ -1,9 +1,9 @@
 from map_loader import load_map, terrain_cost
 from astar import astar_debug
 
-MAP_PATH = "mapa.txt"   # use o do prof
-SRC_LABEL = 'i'         # origem
-DST_LABEL = 'Z'         # destino (troque se quiser visualizar outro par)
+MAP_PATH = "mapa.txt"   
+SRC_LABEL = 'i'         
+DST_LABEL = 'Z'         
 
 if __name__ == "__main__":
     m = load_map(MAP_PATH)
@@ -17,7 +17,7 @@ if __name__ == "__main__":
     elif DST_LABEL == 'Z': dst = m["goal"]
     else: dst = m["events"][DST_LABEL]
 
-    # imprime contagens a cada 2000 expansões; printa overlay final
+    # imprime contagens a cada 2000 expansões;
     dist, path, opened, closed = astar_debug(m, src, dst, terrain_cost,
                                              print_every=2000, print_full=False)
 
@@ -26,7 +26,3 @@ if __name__ == "__main__":
     else:
         print(f"Custo: {int(dist)}  Passos: {max(0, len(path)-1)}")
         print(f"Visitados: {len(closed)}  Fronteira: {len(opened - closed)}")
-
-        # Se quiser imprimir o mapa com overlay, ligue isto (cuidado: 137x320 no console):
-        # from astar import _print_overlay
-        # _print_overlay(m['grid'], opened, closed, path, src, dst)

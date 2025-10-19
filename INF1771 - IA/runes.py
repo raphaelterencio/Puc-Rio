@@ -1,7 +1,6 @@
-# runes.py — alocação ÓTIMA de runas via DP multidimensional
 from config import RUNES, EVENT_DIFFICULTY
 
-# Gera todos os subconjuntos NÃO vazios de runas (máx. 5 => 31 subsets)
+
 def _subset_usage_and_power():
     n = len(RUNES)
     subsets = []
@@ -32,10 +31,9 @@ def _dp_for_keep_idx(events_labels, keep_idx):
     n_r = len(RUNES)
 
     # DP por estados de uso (u0..u4). Estados: 0..cap
-    # Representação: tupla (u0,u1,u2,u3,u4) -> melhor tempo acumulado
     start_state = (0, 0, 0, 0, 0)
     dp = {start_state: 0.0}
-    parent = {}  # (ev_idx, state) -> (prev_state, subset_uses)
+    parent = {}  
 
     for ev_idx in range(n_ev):
         D = Ds[ev_idx]
@@ -70,7 +68,6 @@ def _dp_for_keep_idx(events_labels, keep_idx):
         dp = next_dp
         parent.update(next_parent)
 
-    # escolhe melhor estado final (qualquer que sature ou não, mas DP tende a usar tudo)
     best_total = None
     best_state = None
     for st, t in dp.items():
@@ -111,10 +108,6 @@ def _dp_for_keep_idx(events_labels, keep_idx):
     return best_total, details, rune_usage
 
 def allocate_runes_optimal(event_labels_in_order):
-    """
-    event_labels_in_order: lista de 16 eventos na ordem do TSP.
-    Tenta todas as escolhas de “runa inteira” (cap=4) e pega a melhor.
-    """
     best = None
     best_payload = None
     for keep_idx in range(len(RUNES)):
@@ -123,7 +116,6 @@ def allocate_runes_optimal(event_labels_in_order):
             best = total
             best_payload = (details, usage)
 
-    # checagem da regra: deve resultar em [4,5,5,5,5] (ordem pode variar)
     usages = sorted(best_payload[1].values())
     keep_rule_ok = (usages == [4,5,5,5,5])
 
@@ -134,5 +126,4 @@ def allocate_runes_optimal(event_labels_in_order):
         "keep_rule_ok": keep_rule_ok,
     }
 
-# Mantém compatível com seu run_total.py atual:
 allocate_runes_greedy = allocate_runes_optimal

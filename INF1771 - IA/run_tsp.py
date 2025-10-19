@@ -1,9 +1,8 @@
-# run_tsp.py
 from map_loader import load_map
 from pairwise import build_pairwise
 from tsp_held_karp import solve_tsp_path
 
-MAP_PATH = "mapa.txt"  # seu arquivo do professor
+MAP_PATH = "mapa.txt" 
 
 if __name__ == "__main__":
     m = load_map(MAP_PATH)

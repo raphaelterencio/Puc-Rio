@@ -2,7 +2,7 @@
 from map_loader import load_map, terrain_cost
 from astar import astar
 
-MAP_PATH = "mapa.txt"  # use o arquivo do professor aqui
+MAP_PATH = "mapa.txt" 
 
 if __name__ == "__main__":
     m = load_map(MAP_PATH)
