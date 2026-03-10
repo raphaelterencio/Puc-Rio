@@ -1,0 +1,51 @@
+package model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+class Bishop extends Piece{
+
+	protected Bishop(char color)
+	{ 
+		super(color);
+		this.setSymbol('B');
+	}
+	
+	@Override
+	// Movimento diagonal
+	protected boolean canMove(int row, int column, int target_row, int target_column) 
+	{
+		int diff_row = Math.abs(row - target_row);
+		int diff_column = Math.abs(column - target_column);
+		
+		if (diff_row == diff_column) return true;
+		
+		return false;
+	}
+	
+	@ Override
+	protected List<int[]> getPath(int row, int column, int target_row, int target_column)
+	{	
+		List<int[]> path = new ArrayList<>();
+		
+		// Não confere se o movimento for impossível
+		if( !canMove(row,column, target_row, target_column) ) 
+			return path;
+		
+		// Auxiliares para percorrer o caminho da peça
+	    int step_row = (target_row > row) ? 1 : -1; // 1 (para baixo) -1 (para cima)
+	    int step_column = (target_column > column) ? 1 : -1; // 1 (direta) -1 (esquerda)
+		
+	    int current_row = row + step_row;
+	    int current_column = column + step_column;
+
+	    while (current_row != target_row && current_column != target_column) {
+	    	path.add(new int[] {current_row, current_column});
+	        current_row += step_row;
+	        current_column += step_column;
+	    }
+	    path.add(new int[] {current_row, current_column});
+		
+		return path;
+	}
+} 
